@@ -1,6 +1,8 @@
 package com.gutsche.picpay.infra.exceptions;
 
-public class TransferWalletBalanceNotAuthorizedException extends RuntimeException {
+import com.gutsche.picpay.core.exceptions.status.UnauthorizedException;
+
+public class TransferWalletBalanceNotAuthorizedException extends UnauthorizedException {
   public TransferWalletBalanceNotAuthorizedException(String message) {
     super(message);
   }

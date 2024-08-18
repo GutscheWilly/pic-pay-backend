@@ -2,6 +2,7 @@ package com.gutsche.picpay.application.controllers;
 
 import com.gutsche.picpay.application.dtos.TransferWalletBalanceDto;
 import com.gutsche.picpay.application.services.WalletService;
+import com.gutsche.picpay.core.exceptions.status.StatusException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,8 @@ public class WalletController {
       );
 
       return ResponseEntity.ok("Transfer successful.");
-    } catch (Exception exception) {
-      return ResponseEntity.badRequest().body(exception.getMessage());
+    } catch (StatusException exception) {
+      return ResponseEntity.status(exception.getStatus()).body(exception.getMessage());
     }
   }
 }

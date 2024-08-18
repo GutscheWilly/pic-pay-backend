@@ -1,6 +1,8 @@
 package com.gutsche.picpay.core.exceptions;
 
-public class WalletNotFoundException extends RuntimeException {
+import com.gutsche.picpay.core.exceptions.status.NotFoundException;
+
+public class WalletNotFoundException extends NotFoundException {
   public WalletNotFoundException(String message) {
     super(message);
   }

@@ -1,6 +1,8 @@
 package com.gutsche.picpay.core.exceptions;
 
-public class WalletHasNoEnoughBalanceException extends RuntimeException {
+import com.gutsche.picpay.core.exceptions.status.BadRequestException;
+
+public class WalletHasNoEnoughBalanceException extends BadRequestException {
   public WalletHasNoEnoughBalanceException(String message) {
     super(message);
   }
