@@ -15,7 +15,7 @@ public class Wallet {
   private String completeName;
 
   @Column(unique = true)
-  private String cpfOrCnpj;
+  private String cpfCnpj;
 
   @Column(unique = true)
   private String email;
@@ -29,7 +29,7 @@ public class Wallet {
 
   public Wallet(CreationWalletDto creationWalletDto) {
     this.completeName = creationWalletDto.completeName();
-    this.cpfOrCnpj = creationWalletDto.cpfOrCnpj();
+    this.cpfCnpj = creationWalletDto.cpfCnpj();
     this.email = creationWalletDto.email();
     this.password = creationWalletDto.password();
     this.walletType = creationWalletDto.walletTypeEnum().getWalletType();
@@ -46,8 +46,8 @@ public class Wallet {
     return completeName;
   }
 
-  public String getCpfOrCnpj() {
-    return cpfOrCnpj;
+  public String getCpfCnpj() {
+    return cpfCnpj;
   }
 
   public String getEmail() {

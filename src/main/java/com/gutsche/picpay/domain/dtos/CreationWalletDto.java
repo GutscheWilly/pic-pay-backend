@@ -9,8 +9,8 @@ public record CreationWalletDto(
   @NotBlank(message = "Complete name required.")
   String completeName,
 
-  @NotBlank(message = "CPF or CNPJ required.")
-  String cpfOrCnpj,
+  @NotBlank(message = "CPF/CNPJ required.")
+  String cpfCnpj,
 
   @NotBlank(message = "Email required.")
   String email,
