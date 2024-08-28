@@ -18,7 +18,7 @@ public record CreationWalletDto(
   @NotBlank(message = "Password required.")
   String password,
 
-  @NotNull(message = "Wallet type required.")
+  @NotNull(message = "Wallet type enum required.")
   WalletTypeEnum walletTypeEnum
 
 ) {}
