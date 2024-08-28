@@ -18,8 +18,6 @@ public class WalletService {
   private final CnpjValidatorGateway cnpjValidatorGateway;
   private final EmailValidatorGateway emailValidatorGateway;
   private final PasswordValidatorGateway passwordValidatorGateway;
-  private final CpfFormatterGateway cpfFormatterGateway;
-  private final CnpjFormatterGateway cnpjFormatterGateway;
   private final PasswordEncryptorGateway passwordEncryptorGateway;
 
   @Autowired
@@ -29,8 +27,6 @@ public class WalletService {
       CnpjValidatorGateway cnpjValidatorGateway,
       EmailValidatorGateway emailValidatorGateway,
       PasswordValidatorGateway passwordValidatorGateway,
-      CpfFormatterGateway cpfFormatterGateway,
-      CnpjFormatterGateway cnpjFormatterGateway,
       PasswordEncryptorGateway passwordEncryptorGateway
   ) {
     this.walletRepository = walletRepository;
@@ -38,8 +34,6 @@ public class WalletService {
     this.cnpjValidatorGateway = cnpjValidatorGateway;
     this.emailValidatorGateway = emailValidatorGateway;
     this.passwordValidatorGateway = passwordValidatorGateway;
-    this.cpfFormatterGateway = cpfFormatterGateway;
-    this.cnpjFormatterGateway = cnpjFormatterGateway;
     this.passwordEncryptorGateway = passwordEncryptorGateway;
   }
 
@@ -63,11 +57,11 @@ public class WalletService {
 
   private String validateAndUnformatCpfCnpj(String cpfCnpj) {
     if (cpfValidatorGateway.validate(cpfCnpj)) {
-      return cpfFormatterGateway.unformat(cpfCnpj);
+      return cpfValidatorGateway.unformat(cpfCnpj);
     }
 
     if (cnpjValidatorGateway.validate(cpfCnpj)) {
-      return cnpjFormatterGateway.unformat(cpfCnpj);
+      return cnpjValidatorGateway.unformat(cpfCnpj);
     }
 
     throw new InvalidCpfCnpjException(cpfCnpj);
