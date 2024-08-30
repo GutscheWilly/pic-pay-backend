@@ -37,31 +37,30 @@ public class WalletService {
     this.passwordEncryptorGateway = passwordEncryptorGateway;
   }
 
-  public void create(CreationWalletDto creationWalletDto) {
-    String unformattedCpfCnpj = validateAndUnformatCpfCnpj(creationWalletDto.cpfCnpj());
+  public void create(CreationWalletDto dto) {
+    validateCpfCnpj(dto.cpfCnpj());
+    validateEmail(dto.email());
 
-    validateEmail(creationWalletDto.email());
+    String unformattedCpfCnpj = unformatCpfCnpj(dto.cpfCnpj());
+    validateWalletRegistration(unformattedCpfCnpj, dto.email());
 
-    validateWalletRegistration(unformattedCpfCnpj, creationWalletDto.email());
+    validatePassword(dto.password());
+    String encryptedPassword = passwordEncryptorGateway.encrypt(dto.password());
 
-    String encryptedPassword = validateAndEncryptPassword(creationWalletDto.password());
-
-    walletRepository.save(new Wallet(new CreationWalletDto(
-        creationWalletDto.completeName(),
-        unformattedCpfCnpj,
-        creationWalletDto.email(),
-        encryptedPassword,
-        creationWalletDto.walletTypeEnum()
-    )));
+    walletRepository.save(new Wallet(
+        new CreationWalletDto(
+            dto.completeName(),
+            unformattedCpfCnpj,
+            dto.email(),
+            encryptedPassword,
+            dto.walletTypeEnum()
+        )
+    ));
   }
 
-  private String validateAndUnformatCpfCnpj(String cpfCnpj) {
-    if (cpfValidatorGateway.validate(cpfCnpj)) {
-      return cpfValidatorGateway.unformat(cpfCnpj);
-    }
-
-    if (cnpjValidatorGateway.validate(cpfCnpj)) {
-      return cnpjValidatorGateway.unformat(cpfCnpj);
+  private void validateCpfCnpj(String cpfCnpj) {
+    if (cpfValidatorGateway.validate(cpfCnpj) || cnpjValidatorGateway.validate(cpfCnpj)) {
+      return;
     }
 
     throw new InvalidCpfCnpjException(cpfCnpj);
@@ -75,15 +74,23 @@ public class WalletService {
     throw new InvalidEmailException(email);
   }
 
+  private String unformatCpfCnpj(String cpfCnpj) {
+    if (cpfValidatorGateway.validate(cpfCnpj)) {
+      return cpfValidatorGateway.unformat(cpfCnpj);
+    }
+
+    return cnpjValidatorGateway.unformat(cpfCnpj);
+  }
+
   private void validateWalletRegistration(String cpfCnpj, String email) {
     if (walletRepository.findByCpfCnpjOrEmail(cpfCnpj, email).isPresent()) {
       throw new WalletAlreadyRegisteredException();
     }
   }
 
-  private String validateAndEncryptPassword(String password) {
+  private void validatePassword(String password) {
     if (passwordValidatorGateway.validate(password)) {
-      return passwordEncryptorGateway.encrypt(password);
+      return;
     }
 
     throw new InvalidPasswordException();

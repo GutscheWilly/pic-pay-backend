@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -69,6 +70,7 @@ public class WalletServiceTest {
     assertEquals(createdWallet.getEmail(), dto.email());
     assertTrue(passwordEncryptorGateway.compare(dto.password(), createdWallet.getEncryptedPassword()));
     assertEquals(createdWallet.getWalletType().getId(), dto.walletTypeEnum().getWalletType().getId());
+    assertEquals(0, createdWallet.getBalance().compareTo(BigDecimal.ZERO));
   }
 
   @Test
