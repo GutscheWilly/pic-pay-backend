@@ -78,6 +78,11 @@
 			<artifactId>passay</artifactId>
 			<version>1.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>net.datafaker</groupId>
+			<artifactId>datafaker</artifactId>
+			<version>2.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

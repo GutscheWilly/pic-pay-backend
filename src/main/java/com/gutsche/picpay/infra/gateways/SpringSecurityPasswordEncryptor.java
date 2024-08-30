@@ -16,4 +16,8 @@ public class SpringSecurityPasswordEncryptor implements PasswordEncryptorGateway
   public String encrypt(String password) {
     return passwordEncoder.encode(password);
   }
+
+  public Boolean compare(String password, String encryptedPassword) {
+    return passwordEncoder.matches(password, encryptedPassword);
+  }
 }

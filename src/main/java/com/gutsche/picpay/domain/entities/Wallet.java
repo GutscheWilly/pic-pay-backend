@@ -20,7 +20,7 @@ public class Wallet {
   @Column(unique = true)
   private String email;
 
-  private String password;
+  private String encryptedPassword;
 
   @ManyToOne
   private WalletType walletType;
@@ -31,7 +31,7 @@ public class Wallet {
     this.completeName = creationWalletDto.completeName();
     this.cpfCnpj = creationWalletDto.cpfCnpj();
     this.email = creationWalletDto.email();
-    this.password = creationWalletDto.password();
+    this.encryptedPassword = creationWalletDto.password();
     this.walletType = creationWalletDto.walletTypeEnum().getWalletType();
     this.balance = BigDecimal.ZERO;
   }
@@ -52,6 +52,10 @@ public class Wallet {
 
   public String getEmail() {
     return email;
+  }
+
+  public String getEncryptedPassword() {
+    return encryptedPassword;
   }
 
   public WalletType getWalletType() {
