@@ -15,12 +15,20 @@ public class FakerDataGenerator implements DataGenerator {
     return faker.name().fullName();
   }
 
-  public String validCpfCnpj() {
+  public String validCpf() {
     return faker.cpf().valid();
   }
 
-  public String invalidCpfCnpj() {
+  public String invalidCpf() {
     return faker.cpf().invalid();
+  }
+
+  public String validCnpj() {
+    return faker.cnpj().valid();
+  }
+
+  public String invalidCnpj() {
+    return faker.cnpj().invalid();
   }
 
   public String validEmail() {
